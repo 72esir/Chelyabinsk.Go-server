@@ -4,7 +4,7 @@ from pydantic import BaseModel
 class PlaceAdd(BaseModel):
     title: str
     description: str
-    langitude: float
+    longitude: float
     latitude: float
 
 class EventAdd(PlaceAdd):
