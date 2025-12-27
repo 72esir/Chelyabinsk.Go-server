@@ -1,13 +1,19 @@
 from datetime import datetime
+from os import name
+from tkinter import EventType
 
-from sqlalchemy import DateTime, String, Float, func
+from fastapi import FastAPI
+from sqlalchemy import DateTime, String, Float, func, Enum as SQLEnum
 from app.core.base import Base
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from app.models.enums import *
 
 class PlacesOrm(Base):
     __tablename__ = "places"
 
     id: Mapped[int] = mapped_column(primary_key=True)
+    type: Mapped[PlacesTypes] = mapped_column(SQLEnum(PlacesTypes, name="places_type_enum"), nullable=False)
     title: Mapped[str] = mapped_column(String(50))
     description: Mapped[str] = mapped_column(String(1000))
     latitude: Mapped[float] = mapped_column(Float, nullable=False)
@@ -19,6 +25,7 @@ class EventOrm(Base):
     __tablename__ = "events"
 
     id: Mapped[int] = mapped_column(primary_key=True)
+    type: Mapped[EventsTypes] = mapped_column(SQLEnum(EventsTypes, name="event_type_enum"), nullable=False)
     title: Mapped[str] = mapped_column(String(50))
     description: Mapped[str] = mapped_column(String(1000))
     latitude: Mapped[float] = mapped_column(Float, nullable=False)

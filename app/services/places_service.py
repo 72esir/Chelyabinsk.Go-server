@@ -10,6 +10,7 @@ def get_places_dto(places: Sequence[PlacesOrm]) -> List[Place]:
     for place in places:
         places_dto.append(Place(
             id=place.id,
+            type=place.type,
             title=place.title,
             description=place.description,
             longitude=place.longitude,
@@ -21,6 +22,7 @@ def get_places_dto(places: Sequence[PlacesOrm]) -> List[Place]:
 
 async def add_place(s: SessionDep, payload: PlaceAdd):
     new_place = PlacesOrm(
+        type=payload.type,
         title=payload.title,
         description=payload.description,
         latitude=payload.latitude,

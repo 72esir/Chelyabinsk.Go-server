@@ -11,6 +11,7 @@ def get_events_dto(events: Sequence[EventOrm]) -> List[Event]:
     for event in events:
         events_dto.append(Event(
             id=event.id,
+            type = event.type,
             title=event.title,
             description=event.description,
             longitude=event.longitude,
@@ -23,6 +24,7 @@ def get_events_dto(events: Sequence[EventOrm]) -> List[Event]:
 
 async def add_event(s: SessionDep, payload: EventAdd):
     new_event = EventOrm(
+        type=payload.type,
         title=payload.title,
         description=payload.description,
         date=payload.date,
