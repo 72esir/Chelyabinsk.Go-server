@@ -4,6 +4,7 @@ from fastapi import HTTPException, status
 from sqlalchemy import select
 from app.core.db_core import SessionDep
 from app.models.db_models import EventOrm
+from app.models.enums import EventsTypes
 from app.schemas.schemas import Event, EventAdd
 
 def get_events_dto(events: Sequence[EventOrm]) -> List[Event]:
@@ -58,3 +59,17 @@ async def get_event_by_id(s: SessionDep, event_id: int):
             status_code=status.HTTP_404_NOT_FOUND,
             detail="event by id not found"
         )
+
+async def get_events_by_type(s: SessionDep, type: EventsTypes):
+    query = select(EventOrm).filter(EventOrm.type == type)
+    res = await s.execute(query)
+    events = res.scalars().all()
+
+    if not events:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="events by type not found"
+        )
+    
+    events_dto = get_events_dto(events)
+    return events_dto

@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 
 from app.core.db_core import SessionDep
+from app.models.enums import EventsTypes
 from app.schemas.schemas import EventAdd
 from app.services import events_service
 
@@ -25,6 +26,14 @@ async def get_all_events(s: SessionDep):
 @router.get(f"/{id}")
 async def get_event_by_id(s: SessionDep, id: int):
     result = await events_service.get_event_by_id(s, id)
+    return {
+        "success" : True,
+        "data" : result
+    }
+
+@router.get(f"/{type}")
+async def get_events_by_type(s: SessionDep, type: EventsTypes):
+    result = await events_service.get_events_by_type(s, type)
     return {
         "success" : True,
         "data" : result

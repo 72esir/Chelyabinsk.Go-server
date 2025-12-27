@@ -1,8 +1,9 @@
 from typing import List, Sequence
-from fastapi import HTTPException, status
+from fastapi import HTTPException, Query, status
 from sqlalchemy import desc, select
 from app.core.db_core import SessionDep
 from app.models.db_models import PlacesOrm
+from app.models.enums import PlacesTypes
 from app.schemas.schemas import EventAdd, Place, PlaceAdd
 
 def get_places_dto(places: Sequence[PlacesOrm]) -> List[Place]:
@@ -55,6 +56,22 @@ async def get_place_by_id(s: SessionDep, place_id: int):
             status_code=status.HTTP_404_NOT_FOUND,
             detail="place by id not found"
         )
+
+async def get_places_by_type(s: SessionDep, type: PlacesTypes):
+    query = select(PlacesOrm).filter(PlacesOrm.type == type)
+    res = await s.execute(query)
+    places = res.scalars().all()
+
+    if not places:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="places by type not found"
+        )
+    
+    places_dto = get_places_dto(places)
+    return places_dto
+
+
     
     
 
