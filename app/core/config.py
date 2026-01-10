@@ -10,28 +10,40 @@ class Settings(BaseSettings):
     DB_PASSWORD: str
     DB_NAME: str
 
-    private_key_path: Path = BASE_DIR/"certs"/"jwt-private.pem"
-    public_key_path: Path = BASE_DIR/"certs"/"jwt-public.pem"
-    algorithm: str = "RS256"
-
-    access_token_expire_minutes: int = 15
-    refresh_token_expire_days: int = 30
+    public: str
+    secret: str
+    s3_endpoint: str
+    s3_port: str
+    s3_region: str
+    s3_bucket_name: str
 
     @property
     def db_url_asyncpg(self):
         return f"postgresql+asyncpg://{self.DB_USER}:{self.DB_PASSWORD}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
 
     @property
-    def private_key(self):
-        return self.private_key_path
+    def get_access_key(self):
+        return self.public
 
     @property
-    def public_key(self):
-        return self.public_key_path
-
+    def get_secret_access_key(self):
+        return self.secret
+    
     @property
-    def get_algorithm(self):
-        return self.algorithm
+    def get_s3_endpoint(self):
+        return self.s3_endpoint
+    
+    @property
+    def get_s3_port(self):
+        return self.s3_port
+    
+    @property
+    def get_s3_region(self):
+        return self.s3_region
+    
+    @property
+    def get_s3_bucket_name(self):
+        return self.s3_bucket_name
 
     model_config = SettingsConfigDict(env_file=".env")
 

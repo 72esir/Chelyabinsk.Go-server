@@ -23,17 +23,17 @@ async def get_all_events(s: SessionDep):
         "data" : result
     }
 
-@router.get(f"/{id}")
-async def get_event_by_id(s: SessionDep, id: int):
-    result = await events_service.get_event_by_id(s, id)
+@router.get("/id/{event_id}")
+async def get_event_by_id(s: SessionDep, event_id: int):
+    result = await events_service.get_event_by_id(s, event_id)
     return {
         "success" : True,
         "data" : result
     }
 
-@router.get(f"/{type}")
-async def get_events_by_type(s: SessionDep, type: EventsTypes):
-    result = await events_service.get_events_by_type(s, type)
+@router.get("/type/{event_type}")
+async def get_events_by_type(s: SessionDep, event_type: EventsTypes):
+    result = await events_service.get_events_by_type(s, event_type)
     return {
         "success" : True,
         "data" : result

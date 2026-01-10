@@ -23,7 +23,7 @@ async def get_all_places(s: SessionDep):
         "data" : result
     }
 
-@router.get(f"/{id}")
+@router.get("/id/{place_id}")
 async def get_place_by_id(s: SessionDep, place_id: int):
     result = await places_service.get_place_by_id(s, place_id)
     return {
@@ -31,9 +31,9 @@ async def get_place_by_id(s: SessionDep, place_id: int):
         "data" : result
     }
 
-@router.get(f"/{type}")
-async def get_places_by_type(s: SessionDep, type: PlacesTypes):
-    result = await places_service.get_places_by_type(s, type)
+@router.get("/type/{place_type}")
+async def get_places_by_type(s: SessionDep, place_type: PlacesTypes):
+    result = await places_service.get_places_by_type(s, place_type)
     return {
         "success" : True,
         "data" : result
