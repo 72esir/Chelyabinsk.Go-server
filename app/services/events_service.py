@@ -12,14 +12,16 @@ def get_events_dto(events: Sequence[EventOrm]) -> List[Event]:
     for event in events:
         events_dto.append(Event(
             id=event.id,
-            type = event.type,
-            title=event.title,
-            description=event.description,
-            longitude=event.longitude,
-            latitude=event.latitude,
-            date=event.date,
+        type = event.type,
+        title=event.title,
+        price=event.price,
+        description=event.description,
+        image_url=event.image_url,
+        longitude=event.longitude,
+        latitude=event.latitude,
+        date=event.date,
             created_at=event.created_at,
-            updated_ad=event.updated_at,
+            updated_at=event.updated_at,
         ))
     return events_dto
 
@@ -27,7 +29,9 @@ async def add_event(s: SessionDep, payload: EventAdd):
     new_event = EventOrm(
         type=payload.type,
         title=payload.title,
+        price=payload.price,
         description=payload.description,
+        image_url=payload.image_url,
         date=payload.date,
         latitude=payload.latitude,
         longitude=payload.longitude,

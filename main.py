@@ -1,13 +1,18 @@
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 import uvicorn
 
 from app.api import main_router
 from app.core.db_core import engine, Base
+from app.core.config import BASE_DIR
 
 
 app = FastAPI()
 
 app.include_router(main_router)
+static_dir = BASE_DIR / "static"
+static_dir.mkdir(parents=True, exist_ok=True)
+app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
 @app.on_event("startup")
 async def on_startup():

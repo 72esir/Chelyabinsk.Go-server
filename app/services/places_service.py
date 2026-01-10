@@ -13,11 +13,13 @@ def get_places_dto(places: Sequence[PlacesOrm]) -> List[Place]:
             id=place.id,
             type=place.type,
             title=place.title,
+            address=place.address,
             description=place.description,
+            image_url=place.image_url,
             longitude=place.longitude,
             latitude=place.latitude,
             created_at=place.created_at,
-            updated_ad=place.updated_at,
+            updated_at=place.updated_at,
         ))
     return places_dto
 
@@ -25,7 +27,9 @@ async def add_place(s: SessionDep, payload: PlaceAdd):
     new_place = PlacesOrm(
         type=payload.type,
         title=payload.title,
+        address=payload.address,
         description=payload.description,
+        image_url=payload.image_url,
         latitude=payload.latitude,
         longitude=payload.longitude,
     )
