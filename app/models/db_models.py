@@ -1,8 +1,4 @@
 from datetime import datetime
-from os import name
-from tkinter import EventType
-
-from fastapi import FastAPI
 from sqlalchemy import DateTime, String, Float, func, Enum as SQLEnum
 from app.core.base import Base
 from sqlalchemy.orm import Mapped, mapped_column, relationship
