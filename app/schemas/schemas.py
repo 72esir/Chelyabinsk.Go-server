@@ -16,6 +16,7 @@ class PlaceAdd(BaseModel):
 class EventAdd(BaseModel):
     type: EventsTypes
     title: str
+    location: str
     price: str
     description: str
     image_url: Optional[str] = None

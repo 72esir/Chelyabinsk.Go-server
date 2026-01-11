@@ -14,6 +14,7 @@ def get_events_dto(events: Sequence[EventOrm]) -> List[Event]:
             id=event.id,
         type = event.type,
         title=event.title,
+        location=event.location,
         price=event.price,
         description=event.description,
         image_url=event.image_url,
@@ -29,6 +30,7 @@ async def add_event(s: SessionDep, payload: EventAdd):
     new_event = EventOrm(
         type=payload.type,
         title=payload.title,
+        location=payload.location,
         price=payload.price,
         description=payload.description,
         image_url=payload.image_url,

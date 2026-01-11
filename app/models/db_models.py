@@ -25,6 +25,7 @@ class EventOrm(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     type: Mapped[EventsTypes] = mapped_column(SQLEnum(EventsTypes, name="event_type_enum"), nullable=False)
     title: Mapped[str] = mapped_column(String(50))
+    location: Mapped[str] = mapped_column(String(255))
     price: Mapped[str] = mapped_column(String(50))
     description: Mapped[str] = mapped_column(String(1000))
     image_url: Mapped[str | None] = mapped_column(String(500), nullable=True)

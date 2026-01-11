@@ -15,6 +15,7 @@ async def add_event(
     s: SessionDep,
     type: EventsTypes = Form(...),
     title: str = Form(...),
+    location: str = Form(...),
     price: str = Form(...),
     description: str = Form(...),
     longitude: float = Form(...),
@@ -28,6 +29,7 @@ async def add_event(
     payload = EventAdd(
         type=type,
         title=title,
+        location=location,
         price=price,
         description=description,
         longitude=longitude,
